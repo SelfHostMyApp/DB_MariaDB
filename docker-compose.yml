@@ -19,7 +19,7 @@ services:
       - ~/DockerVolumes/database/maria/data:/var/lib/mysql
       - ~/DockerVolumes/database/maria/init:/docker-entrypoint-initdb.d
       - ~/DockerVolumes/database/maria/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
-      - ./init_scripts/mariadb-init.sh:/docker-entrypoint-initdb.d/mysql-init.sh
+      - ./services/maria-db/init.sh:/docker-entrypoint-initdb.d/mysql-init.sh
     command:
       [
         "--log-bin=mysqld-bin",
