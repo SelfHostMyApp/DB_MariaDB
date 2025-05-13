@@ -5,6 +5,7 @@ x-basics: &basics
 services:
   maria-db:
     image: mariadb:${MARIADB_VERSION:-latest}
+    container_name: maria-db
     networks:
       core:
         ipv4_address: 172.20.0.5
