@@ -4,7 +4,7 @@ x-basics: &basics
   restart: unless-stopped
 services:
   maria-db:
-    image: mariadb:latest
+    image: mariadb:${MARIADB_VERSION:-latest}
     networks:
       core:
         ipv4_address: 172.20.0.5
