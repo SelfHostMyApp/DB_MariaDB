@@ -1,0 +1,39 @@
+x-basics: &basics
+  env_file:
+    - .env
+  restart: unless-stopped
+services:
+  maria-db:
+    container_name: db-maria
+    image: mariadb:latest
+    networks:
+      core:
+        ipv4_address: 172.20.0.5
+    <<: *basics
+    environment:
+      - MARIADB_ROOT_HOST=%
+      - MARIADB_ROOT_PASSWORD=${ROOT_PASSWORD}
+      - MARIADB_DATABASES=${MARIADB_DATABASES}
+      - MARIADB_USERS=${MARIADB_USERS}
+      - MARIADB_PASSWORDS=${MARIADB_PASSWORDS}
+    volumes:
+      - ~/DockerVolumes/database/maria/data:/var/lib/mysql
+      - ~/DockerVolumes/database/maria/init:/docker-entrypoint-initdb.d
+      - ~/DockerVolumes/database/maria/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+      - ./init_scripts/mariadb-init.sh:/docker-entrypoint-initdb.d/mysql-init.sh
+    command:
+      [
+        "--log-bin=mysqld-bin",
+        "--max-connections=1000",
+        "--wait-timeout=28800",
+        "--bind-address=0.0.0.0",
+      ]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'mariadb -h localhost -u root -p"${ROOT_PASSWORD}" -e "SELECT 1;"',
+        ]
+      start_period: 90s
+      retries: 10
+      timeout: 15s
