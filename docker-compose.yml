@@ -4,7 +4,6 @@ x-basics: &basics
   restart: unless-stopped
 services:
   maria-db:
-    container_name: db-maria
     image: mariadb:latest
     networks:
       core:
