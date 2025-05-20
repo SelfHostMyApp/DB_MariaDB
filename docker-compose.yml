@@ -17,9 +17,9 @@ services:
       - MARIADB_USERS=${MARIADB_USERS}
       - MARIADB_PASSWORDS=${MARIADB_PASSWORDS}
     volumes:
-      - ~/DockerVolumes/database/maria-db/data:/var/lib/mysql
-      - ~/DockerVolumes/database/maria-db/init:/docker-entrypoint-initdb.d
-      - ~/DockerVolumes/database/maria-db/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+      - ./volumes/database/maria-db/data:/var/lib/mysql
+      - ~/volumes/database/maria-db/init:/docker-entrypoint-initdb.d
+      - ~/volumes/database/maria-db/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
       - ./services/maria-db/init.sh:/docker-entrypoint-initdb.d/mysql-init.sh
     command:
       [
